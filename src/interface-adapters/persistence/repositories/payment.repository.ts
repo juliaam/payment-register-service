@@ -9,10 +9,10 @@ export class PrismaPaymentRepository implements PaymentRepository {
     dia,
     codAssinatura,
     valorPago,
-  }: PaymentDto): Promise<void> {
+  }: PaymentDto): Promise<any> {
     const dataPagamento = new Date(ano, mes - 1, dia);
 
-    await prisma.pagamento.create({
+    return await prisma.pagamento.create({
       data: {
         codAssinatura,
         valorPago,

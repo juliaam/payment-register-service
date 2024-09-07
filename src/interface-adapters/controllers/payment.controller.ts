@@ -1,13 +1,18 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { CreatePayment_US } from 'src/application/create-payment.use-case';
 import { PaymentDto } from '../dto/Payment';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Controller('registrarpagamento')
 export class PaymentController {
-  constructor(private readonly createPayment_US: CreatePayment_US) {}
+  constructor(
+    private readonly createPayment_US: CreatePayment_US,
+    @Inject('payment_service') private rabbitClient: ClientProxy,
+  ) {}
 
   @Post()
   async register(@Body() body: PaymentDto): Promise<void> {
-    return await this.createPayment_US.execute(body);
+    const payment = await this.createPayment_US.execute(body);
+    this.rabbitClient.emit('pattern1', payment);
   }
 }

@@ -1,5 +1,5 @@
-import { PaymentDto } from 'src/interface-adapters/dto/Payment';
+import { TPayment } from '../entities/payment.entity';
 
 export abstract class PaymentRepository {
-  abstract register(body: PaymentDto): Promise<void>;
+  abstract register(body: TPayment): Promise<void>;
 }
