@@ -7,12 +7,12 @@ import { ClientProxy } from '@nestjs/microservices';
 export class PaymentController {
   constructor(
     private readonly createPayment_US: CreatePayment_US,
-    @Inject('payment_service') private rabbitClient: ClientProxy,
+    @Inject('payment_service') private paymentService: ClientProxy,
   ) {}
 
   @Post()
   async register(@Body() body: PaymentDto): Promise<void> {
     const payment = await this.createPayment_US.execute(body);
-    this.rabbitClient.emit('pattern1', payment);
+    this.paymentService.emit('payment', payment);
   }
 }

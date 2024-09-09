@@ -16,6 +16,9 @@ import { PaymentController } from './interface-adapters/controllers/payment.cont
             'amqps://kmwhllfz:OWG7biH_cT6cTcUt2cfh1dh0RIhDqV0f@jackal.rmq.cloudamqp.com/kmwhllfz',
           ],
           queue: 'payment_queue_send',
+          queueOptions: {
+            durable: true,
+          },
         },
       },
     ]),
